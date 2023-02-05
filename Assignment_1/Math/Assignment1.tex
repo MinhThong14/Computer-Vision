@@ -1,0 +1,261 @@
+% This is a simple sample document.  For more complicated documents take a look in the exercise tab. Note that everything that comes after a % symbol is treated as comment and ignored when the code is compiled.
+
+\documentclass{article} % \documentclass{} is the first command in any LaTeX code.  It is used to define what kind of document you are creating such as an article or a book, and begins the document preamble
+
+\usepackage{amsmath} % \usepackage is a command that allows you to add functionality to your LaTeX code
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\title{COMP 4102: Assignment 1} % Sets article title
+\author{Minh Thong Mai - ID: 101128263} % Sets authors name
+\date{\today} % Sets date for date compiled
+
+% The preamble ends with the command \begin{document}
+\begin{document} % All begin commands must be paired with an end command somewhere
+    \maketitle % creates title using information in preamble (title, author, date)
+    
+    \section{Theory questions} % creates a section
+    
+    \begin{flushleft}
+
+        \begin{enumerate}
+            % Question 1 starts here
+            \item (5 points) Are three dimensional rotations expressed as $\mathit{R}_{x}$, followed by $\mathit{R}_{y}$, and then $\mathit{R}_{z}$ (rotations
+            around the x, y and z axis) commutative? That is, does the order in which they are applied matter.
+                \bigbreak
+                \text No, the three dimensional rotations expressed as $\mathit{R}_{x}$, followed by $\mathit{R}_{y}$, and then $\mathit{R}_{z}$ are not commutative. And the order in which they are applied matter.
+                \bigbreak
+                \text That is because they are applied in different planes. The different order of rotations will lead to different rotations of the final object. Mathematically, it is because the matrices' multiplication are not commutative ($\mathit{R}_{x}$$\mathit{R}_{y}$$\mathit{R}_{z}$ $\neq$ $\mathit{R}_{z}$$\mathit{R}_{y}$$\mathit{R}_{x}$).
+                \bigbreak
+                \text Prove that matrices' multiplication are not commutative:
+                \break
+                \text Given 2 matrics A and B. Such that \(AB^{-1} = B^{-1}A^{-1}\)
+                \break
+                \text We have: \(AB(AB)^{-1} = ABB^{-1}A^{-1}\)
+                                             = \(AA^{-1}\) = I
+                \break
+                \text But: \(BA(AB)^{-1} = BAB^{-1}A^{-1} \neq I\)
+                \break 
+                \(\therefore AB \neq BA\)
+            
+            % Question 2 starts here
+            \bigbreak
+            \bigbreak
+            \item (8 points) Find the SVD of A, U$\Sigma V^{T}$, where A = $\begin{bmatrix} 2 & 2 & 0 \\ -1 & 1 & 0  \end{bmatrix}$
+            \break
+            \text First find $A^{T}A$: $A^{T}A = \begin{bmatrix} 5 & 3 & 0 \\ 3 & 5 & 0 \\ 0 & 0 & 0\end{bmatrix}$
+            \break $\det (A^{T}A - \lambda I) = \begin{bmatrix}
+                5-\lambda & 3 & 0 \\ 3 & 5 - \lambda & 0 \\ 0 & 0 & -\lambda
+            \end{bmatrix} = -\lambda ^{3} + 10\lambda^{2} - 16\lambda = -\lambda(\lambda^{2} - 10\lambda + 16) = -\lambda(\lambda-2)(\lambda-8)=0$
+            \(\therefore \lambda_{1} = 0, \lambda_{2} = 2, \lambda_{3} = 8\)
+            \break
+
+            $\lambda_{1} = 0$ :
+            \bigbreak
+            $\begin{bmatrix}
+                5-\lambda & 3 & 0 \\ 3 & 5 - \lambda & 0 \\ 0 & 0 & -\lambda
+            \end{bmatrix} = \begin{bmatrix}
+                5 & 3 & 0 \\ 3 & 5 & 0 \\ 0 & 0 & 0
+            \end{bmatrix}$
+            \break \text row-reduces: $\begin{bmatrix}
+                1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0
+            \end{bmatrix}$ , so the eigenvector is $\mathit{v}_{1} = \begin{bmatrix}
+                0 \\ 0 \\ 1
+            \end{bmatrix}$ and the unit-length vector in the kernel of that matrix is $\mathit{v}_{1} = \begin{bmatrix}
+                0 \\ 0 \\ 1
+            \end{bmatrix}$
+
+            \bigbreak
+            $\lambda_{2} = 2$ :
+            \bigbreak
+            $\begin{bmatrix}
+                5-\lambda & 3 & 0 \\ 3 & 5 - \lambda & 0 \\ 0 & 0 & -\lambda
+            \end{bmatrix} = \begin{bmatrix}
+                3 & 3 & 0 \\ 3 & 3 & 0 \\ 0 & 0 & -2
+            \end{bmatrix}$
+            \break \text row-reduces: $\begin{bmatrix}
+                1 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0
+            \end{bmatrix}$ , so the eigenvector is $\mathit{v}_{2} = \begin{bmatrix}
+                -1 \\ 1 \\ 0
+            \end{bmatrix}$ and the unit-length vector in the kernel of that matrix is $\mathit{v}_{2} = \begin{bmatrix}
+                \frac{-\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} \\ 0
+            \end{bmatrix}$
+
+            \bigbreak
+            $\lambda_{3} = 8$ :
+            \bigbreak
+            $\begin{bmatrix}
+                5-\lambda & 3 & 0 \\ 3 & 5 - \lambda & 0 \\ 0 & 0 & -\lambda
+            \end{bmatrix} = \begin{bmatrix}
+                -3 & 3 & 0 \\ 3 & -3 & 0 \\ 0 & 0 & -8
+            \end{bmatrix}$
+            \break \text row-reduces: $\begin{bmatrix}
+                1 & -1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0
+            \end{bmatrix}$ , so the eigenvector is $\mathit{v}_{3} = \begin{bmatrix}
+                1 \\ 1 \\ 0
+            \end{bmatrix}$ and the unit-length vector in the kernel of that matrix is $\mathit{v}_{3} = \begin{bmatrix}
+                \frac{\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} \\ 0
+            \end{bmatrix}$
+
+            \bigbreak So the columns of the matrix V are the unit-length vectors: V = $\begin{bmatrix}
+                \frac{\sqrt{2}}{2} & \frac{-\sqrt{2}}{2} & 0 \\ \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & 0 \\ 0 & 0 & 1
+            \end{bmatrix}$
+
+            \bigbreak
+            \text The square root of the nonzero eigenvalues is : $\sigma_{1} = 2\sqrt{2}$, $\sigma_{2} = \sqrt{2}$
+            \break The $\Sigma$ matrix is a zero matrix with $\sigma_{i}$ in its diagonal: $\Sigma = \begin{bmatrix}
+                2\sqrt{2} & 0 & 0 \\ 0 & \sqrt{2} & 0
+            \end{bmatrix}$
+
+            \bigbreak Compute U by the formula $u_{i} = \frac{1}{\sigma_{i}}Av_{i}$
+            \bigbreak $v_{1} = \frac{1}{\sigma_{1}}Av_{1} = \frac{1}{2\sqrt{2}}\begin{bmatrix}
+                2 & 2 & 0 \\ -1 & 1 & 0
+            \end{bmatrix}\begin{bmatrix}
+                \frac{\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} \\ 0
+            \end{bmatrix} = \begin{bmatrix}
+                1 \\ 0
+            \end{bmatrix}$
+
+            \bigbreak $v_{2} = \frac{1}{\sigma_{2}}Av_{2} = \frac{1}{\sqrt{2}}\begin{bmatrix}
+                2 & 2 & 0 \\ -1 & 1 & 0
+            \end{bmatrix}\begin{bmatrix}
+                \frac{-\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} \\ 0
+            \end{bmatrix} = \begin{bmatrix}
+                0 \\ 1
+            \end{bmatrix}$
+
+            \bigbreak \(\therefore U = \begin{bmatrix}
+                1 & 0 \\ 0 & 1
+            \end{bmatrix}\)
+            
+            \bigbreak So the SVD is:
+            \bigbreak A = U$\Sigma V^{T} = \begin{bmatrix}
+                1 & 0 \\ 0 & 1
+            \end{bmatrix} \begin{bmatrix}
+                2\sqrt{2} & 0 & 0 \\ 0 & \sqrt{2} & 0
+            \end{bmatrix} \begin{bmatrix}
+                \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & 0 \\ \frac{-\sqrt{2}}{2} & \frac{\sqrt{2}}{2} & 0 \\ 0 & 0 & 1
+            \end{bmatrix}$
+
+            % Question 3 starts here
+            \bigbreak
+            \bigbreak
+            \item (4 points) Scale a vector $\begin{bmatrix}
+                x & y
+            \end{bmatrix}^{T}$ in the plane can be achieved b $x'=sx$ and $y'=sy$ where s is a scalar.
+            \break (a) Write out the matrix form of this transformation.
+            \break (b) Write out the transformation matrix for homogeneous coordinates.
+            \break (c) If the transformation also includes a translation 
+            \break $x' = sx + t_{x}$ and $y' = sy + t_{y}$
+            \break Write out the transformation matrix of the homogeneous coordinates.
+            \break (d) What is the equivalent of the above matrix for three-dimensional vectors?
+
+            \bigbreak (a) $\begin{bmatrix}
+                x' \\ y'
+            \end{bmatrix} = \begin{bmatrix}
+                s & 0 \\ 0 & s 
+            \end{bmatrix} \begin{bmatrix}
+                x  \\ y
+            \end{bmatrix}$
+            \bigbreak (b) $\begin{bmatrix}
+                s & 0 & 0 \\ 0 & s & 0 \\ 0 & 0 & 1
+            \end{bmatrix}$
+            \bigbreak (c) $\begin{bmatrix}
+                s & 0 & t_{x} \\ 0 & s & t_{y} \\ 0 & 0 & 1
+            \end{bmatrix}$
+
+            \bigbreak (d) $\begin{bmatrix}
+                s & 0 & 0 & t_{x}  \\ 0  & s & 0 & t_{y} \\ 0 & 0 & s & t_{z} \\ 0 & 0 & 0 & 1
+            \end{bmatrix}$
+
+            % Question 4 starts here
+            \bigbreak
+            \bigbreak
+            \item (5 points) Find the least square solution $\hat{x}$ for Ax = b if   
+            \break A = $\begin{bmatrix}
+                2 & 0 \\ -1 & 1 \\ 0 & 2
+            \end{bmatrix}$ , b = $\begin{bmatrix}
+                1 \\ 0 \\ -1
+            \end{bmatrix}$
+            \break Verify that the error vector b - A $\hat{x}$ is orthogonal to the columns of A.
+            \bigbreak $\hat{x} = (A^{T}A)^{-1}A^{T}b = (\begin{bmatrix}
+                2 & -1 & 0 \\ 0 & 1 & 2
+            \end{bmatrix} \begin{bmatrix}
+                2 & 0 \\ -1 & 1 \\ 0 & 2
+            \end{bmatrix})^{-1} \begin{bmatrix}
+                2 & -1 & 0 \\ 0 & 1 & 2
+            \end{bmatrix} \begin{bmatrix}
+                1 \\0 \\-1
+            \end{bmatrix}$
+            \break $\hat{x} = (\begin{bmatrix}
+                5 & -1 \\ -1 & 5 
+            \end{bmatrix})^{-1} \begin{bmatrix}
+                2 & -1 & 0 \\ 0 & 1 & 2
+            \end{bmatrix} \begin{bmatrix}
+                1 \\ 0 \\-1
+            \end{bmatrix}$
+            \break $\hat{x} = \begin{bmatrix}
+                \frac{5}{24} & \frac{1}{24} \\ \frac{1}{24} & \frac{5}{24}
+            \end{bmatrix} \begin{bmatrix}
+                2 & -1 & 0 \\ 0 & 1 & 2
+            \end{bmatrix} \begin{bmatrix}
+                1 \\ 0 \\ -1
+            \end{bmatrix}$ 
+            \break $\hat{x} = \begin{bmatrix}
+                \frac{5}{12} & \frac{-1}{6} & \frac{1}{12} \\ \frac{1}{12} & \frac{1}{6} & \frac{5}{12}
+            \end{bmatrix} \begin{bmatrix}
+                1 \\ 0 \\ -1
+            \end{bmatrix}$
+            \break $\hat{x} = \begin{bmatrix}
+                \frac{1}{3} \\ -\frac{1}{3}
+            \end{bmatrix}$
+            \bigbreak
+            We have: $b - A\hat{x} = \begin{bmatrix}
+                1 \\ 0 \\ -1 
+            \end{bmatrix} - \begin{bmatrix}
+                2 & 0 \\ -1 & 1 \\ 0 & 2
+            \end{bmatrix} \begin{bmatrix}
+                \frac{1}{3} \\ -\frac{1}{3}
+            \end{bmatrix}$
+            \break $b - A\hat{x} = \begin{bmatrix}
+                1 \\ 0 \\ -1 
+            \end{bmatrix} - \begin{bmatrix}
+                \frac{2}{3} \\ -\frac{2}{3} \\ -\frac{2}{3}
+            \end{bmatrix} = \begin{bmatrix}
+                \frac{1}{3} \\ \frac{2}{3} \\ -\frac{1}{3}
+            \end{bmatrix}$
+            \bigbreak We have col(A) = span\{(2, -1, 0), (0, 1, 2)\}
+            \bigbreak and 
+            \bigbreak $\begin{bmatrix}
+                \frac{1}{3} \\ \frac{2}{3} \\ -\frac{1}{3}
+            \end{bmatrix} \begin{bmatrix}
+                2 \\ -1 \\ 0
+            \end{bmatrix} = 0$
+            \bigbreak $\begin{bmatrix}
+                \frac{1}{3} \\ \frac{2}{3} \\ -\frac{1}{3}
+            \end{bmatrix} \begin{bmatrix}
+                0 \\ 1 \\ 2
+            \end{bmatrix} = 0$
+            \bigbreak so the error vector b - A$\hat{x}$ is orthogonal to the columns of A   
+            \bigbreak
+            \bigbreak
+            \item Matrix K is a discrete, separable 2D filter kernel of size k x k. Assume k is an odd number. After applying
+            filter K on an image I, we get a resulting image $I_{k}$.
+            \bigbreak (a) (3 points) Given an image point (x,y), find its value in the resulting image, $I_{k}(x, y)$. Express your anwser 
+            in terms of I, k, K, x and y. You don't need to consider the case when (x, y) is near the image boundary.
+            \bigbreak(b) (5 points) One property of this separable kernel matrix K is that it can be expressed as the product of two vectors g $\in R^{kx1}$ and h $\in R^{1xk}$, which can also be regarded as two 1D filter kernels. In other words, K = gh. The resulting image we get by first applying g and then applying h to the image I is $I_{gh}$. Show that $I_{K} = I_{gh}$.
+            \bigbreak (a) $I_{K}(x, y) = \sum_{i=1}^{k}\sum_{j=1}^{k}K_{ij}I(x-i+\frac{k}{2}, y - j + \frac{k}{2})$
+            \bigbreak (b) We have: $I_{K} = K \circ I $ , and K = gh (by definition). So $I_{K} = gh \circ I =  I_{gh}$\break Mathematically: \begin{equation} \begin{split}I_{K}(x, y)& = \sum_{i=1}^{k}\sum_{j=1}^{k}K_{ij}I(x-(i-\frac{k}{2}), y - (j - \frac{k}{2}))\\
+                    & = \sum_{i=1}^{k}\sum_{j=1}^{k}g_{i}h_{j}I(x-i+\frac{k}{2}, y - j + \frac{k}{2}) \\
+                    & = \sum_{j=1}^{k}h_{j}\sum_{i=1}^{k}g_{i}I(x-i+\frac{k}{2}, y - j + \frac{k}{2}) \\
+                    & = \sum_{j=1}^{k}h_{j}I(x, y - j + \frac{k}{2}) \\
+                    & = I_{gh}(x, y) 
+            \end{split}\end{equation}
+        \end{enumerate}
+
+    \end{flushleft}
+
+
+
+\end{document} % This is the end of the document

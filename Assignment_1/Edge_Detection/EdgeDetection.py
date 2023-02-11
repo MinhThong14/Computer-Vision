@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import copy
 
 # Smoothing image
 def gaussian_blur(img0, sigma):
@@ -47,6 +48,8 @@ def my_edge_filter(img0, sigma):
     # Gradient orientation
     orientation = gradient_orientation(imgx, imgy)
 
+    # Create deep copy
+    result = copy.deepcopy(img1)
     # Non-maximum suppression
     for i in range(1, img0.shape[0]-1):
         for j in range(1, img0.shape[1]-1):
@@ -54,18 +57,18 @@ def my_edge_filter(img0, sigma):
                 orientation[i, j] += 180
             if (0 <= orientation[i, j] < 22.5) or (157.5 <= orientation[i, j] <= 180):
                 if (img1[i, j] < img1[i, j-1]) or (img1[i, j] < img1[i, j+1]):
-                    img1[i, j] = 0
+                    result[i, j] = 0
             elif (22.5 <= orientation[i, j] < 67.5):
                 if (img1[i, j] < img1[i-1, j+1]) or (img1[i, j] < img1[i+1, j-1]):
-                    img1[i, j] = 0
+                    result[i, j] = 0
             elif (67.5 <= orientation[i, j] < 112.5):
                 if (img1[i, j] < img1[i-1, j]) or (img1[i, j] < img1[i+1, j]):
-                    img1[i, j] = 0
+                    result[i, j] = 0
             elif (112.5 <= orientation[i, j] < 157.5):
                 if (img1[i, j] < img1[i-1, j-1]) or (img1[i, j] < img1[i+1, j+1]):
-                    img1[i, j] = 0
+                    result[i, j] = 0
     
-    return img1
+    return result
 
 # Edge filter with threshold 
 def my_edge_filter_with_threshold(img1):
@@ -104,6 +107,5 @@ if __name__ == "__main__":
     
     # non_maximum_img = cv2.cvtColor(non_maximum_img, cv2.COLOR_BGR2GRAY)
     # non_maximum_img = cv2.normalize(non_maximum_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
-    cv2.imshow('Non_Maximum Suppression', non_maximum_img)
     cv2.waitKey(0)
     

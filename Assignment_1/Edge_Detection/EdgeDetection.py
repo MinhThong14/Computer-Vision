@@ -15,11 +15,11 @@ def gaussian_blur(img0, sigma):
 def sobel_filters(img0):
     # Sobel filter for gradient in x direction
     sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
-    imgx = cv2.filter2D(img0, -1, sobel_x)
+    imgx = cv2.filter2D(img0, cv2.CV_64F, sobel_x)
     
     # Sobel filter for gradient in y direction
     sobel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
-    imgy = cv2.filter2D(img0, -1, sobel_y)
+    imgy = cv2.filter2D(img0, cv2.CV_64F, sobel_y)
     
     return imgx, imgy
 

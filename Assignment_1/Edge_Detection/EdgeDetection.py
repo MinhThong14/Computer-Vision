@@ -76,33 +76,34 @@ def my_edge_filter_with_threshold(img1):
 
 if __name__ == "__main__":
     # Import image
-    img = cv2.imread("./cat2.jpg", 1)
-
-    # Gaussian blur image
-    gaussian_blur_img = gaussian_blur(img, sigma=0)
+    img = cv2.imread("./cat2.jpg", 0)
+    # # Gaussian blur image
+    # gaussian_blur_img = gaussian_blur(img, sigma=0)
     
-    # Sobels
-    imgx, imgy = sobel_filters(gaussian_blur_img)
+    # # Sobels
+    # imgx, imgy = sobel_filters(gaussian_blur_img)
 
-    # Gradient magnitude image
-    gradient_magnitude_img = gradient_magnitude(imgx, imgy)
+    # # Gradient magnitude image
+    # gradient_magnitude_img = gradient_magnitude(imgx, imgy)
 
-    # Gradient orientation image 
-    gradient_orientation_img = gradient_orientation(imgx, imgy)
+    # # Gradient orientation image 
+    # gradient_orientation_img = gradient_orientation(imgx, imgy)
     
     # Non_maximum image
     non_maximum_img = my_edge_filter(img, sigma=2)
     
     # Save images
-    gradient_magnitude_img = np.uint8(gradient_magnitude_img)
-    gradient_magnitude_img = cv2.normalize(gradient_magnitude_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
-    cv2.imwrite('Gradient_Magnitude.jpg', gradient_magnitude_img) 
-    cv2.waitKey(0)
+    # gradient_magnitude_img = np.uint8(gradient_magnitude_img)
+    # gradient_magnitude_img = cv2.normalize(gradient_magnitude_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+    # cv2.imwrite('Gradient_Magnitude.jpg', gradient_magnitude_img) 
+    # cv2.waitKey(0)
 
-    gradient_orientation_img = cv2.convertScaleAbs(gradient_orientation_img)
-    cv2.imwrite('Gradient_Orientation.jpg', gradient_orientation_img)
-    cv2.waitKey(0)
+    # gradient_orientation_img = cv2.convertScaleAbs(gradient_orientation_img)
+    # cv2.imwrite('Gradient_Orientation.jpg', gradient_orientation_img)
+    # cv2.waitKey(0)
     
-    cv2.imwrite('Non_Maximum Suppression', non_maximum_img)
+    # non_maximum_img = cv2.cvtColor(non_maximum_img, cv2.COLOR_BGR2GRAY)
+    # non_maximum_img = cv2.normalize(non_maximum_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+    cv2.imshow('Non_Maximum Suppression', non_maximum_img)
     cv2.waitKey(0)
     

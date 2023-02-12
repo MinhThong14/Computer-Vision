@@ -16,4 +16,5 @@ File structure:
         
 Instruction how to run the code
         In the Edge_Detection root folder, run:     python3 EdgeDetection.py 
-        The code will iterate over all image (cat2, img0 and littledog) from Input_Image folder and generate coresponding images (gradient magnitude, gradient orientation and edge detection) to Output_Image folder 
+        The code will iterate over all images (cat2, img0 and littledog) from Input_Image folder and generate coresponding images (gradient magnitude, gradient orientation and edge detection) to Output_Image folder 
+        

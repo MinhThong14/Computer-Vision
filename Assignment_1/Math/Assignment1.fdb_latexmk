@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1675570334 "/Users/tommai/Dropbox/Carleton/Semester6/Comp 4102/Assignment1/Math/Assignment1.tex" "Assignment1.pdf" "Assignment1" 1675570335
-  "/Users/tommai/Dropbox/Carleton/Semester6/Comp 4102/Assignment1/Math/Assignment1.tex" 1675299320 13413 e8e01813200d65f4827e9f649e6848f6 ""
+["pdflatex"] 1676154071 "/Users/tommai/Dropbox/Carleton/Semester6/Computer-Vision/Assignment_1/Math/Assignment1.tex" "Assignment1.pdf" "Assignment1" 1676154072
+  "/Users/tommai/Dropbox/Carleton/Semester6/Computer-Vision/Assignment_1/Math/Assignment1.tex" 1676154071 13529 e0113b08afa18149603a3863dba8ba04 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -87,9 +87,9 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1668981844 2826448 bd70e8861cd005636fd090ec7dccb7aa ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "Assignment1.aux" 1675570335 799 7946b4a5c476f35ffacaa7b386344431 "pdflatex"
-  "Assignment1.out" 1675570335 126 6717f24d7900ae57ceca7f89058363a7 "pdflatex"
-  "Assignment1.tex" 1675299320 13413 e8e01813200d65f4827e9f649e6848f6 ""
+  "Assignment1.aux" 1676154072 799 7946b4a5c476f35ffacaa7b386344431 "pdflatex"
+  "Assignment1.out" 1676154072 126 6717f24d7900ae57ceca7f89058363a7 "pdflatex"
+  "Assignment1.tex" 1676154071 13529 e0113b08afa18149603a3863dba8ba04 ""
   (generated)
   "Assignment1.aux"
   "Assignment1.log"

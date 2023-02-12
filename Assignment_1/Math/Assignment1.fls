@@ -1,8 +1,8 @@
-PWD /Users/tommai/Dropbox/Carleton/Semester6/Comp 4102/Assignment1/Math
+PWD /Users/tommai/Dropbox/Carleton/Semester6/Computer-Vision/Assignment_1/Math
 INPUT /usr/local/texlive/2022/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/tommai/Dropbox/Carleton/Semester6/Comp 4102/Assignment1/Math/Assignment1.tex
+INPUT /Users/tommai/Dropbox/Carleton/Semester6/Computer-Vision/Assignment_1/Math/Assignment1.tex
 OUTPUT Assignment1.log
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/base/article.cls

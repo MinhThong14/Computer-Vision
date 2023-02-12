@@ -105,7 +105,7 @@ def apply_threshold(img1):
     :return the image that has pixels above the threshold
     
     """
-    threshold = 30  
+    threshold = 30
     img1[img1 < threshold] = 0
     img1[img1 >= threshold] = 255
     return img1
@@ -120,27 +120,82 @@ def sticks_filter(img, n=5, i=8):
     :return the image after apply the sticks  
 
     """
-    # Compute gradient magnitude image
-    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)
-    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)
-    gradient_magnitude = np.sqrt(np.square(sobelx) + np.square(sobely))
-
     # Define the sticks filter kernels
-    kernels = []
-    for rotateCode in range(i):
-        angle = 360.0 * rotateCode / i
-        rot_mat = cv2.getRotationMatrix2D((n / 2, n / 2), angle, 1)
-        kernel = np.zeros((n, n), dtype=np.float32)
-        cv2.rectangle(kernel, (0, n // 2 - 1), (n - 1, n // 2), 1.0, -1)
-        kernel = cv2.warpAffine(kernel, rot_mat, (n, n))
-        kernels.append(kernel)
+    kernels = np.array([
+        [   [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1/n, 1/n, 1/n, 1/n, 1/n],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+        ],
+        [   [0, 0, 0, 0, 0],
+            [0, 0, 0, 1/n, 1/n],
+            [0, 0, 1/n, 0, 0],
+            [1/n, 1/n, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+        ],
+        [   [0, 0, 0, 0, 1/n],
+            [0, 0, 0, 1/n, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 1/n, 0, 0, 0],
+            [1/n, 0, 0, 0, 0],
+        ],
+        [   [0, 0, 0, 1/n, 0],
+            [0, 0, 0, 1/n, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 1/n, 0, 0, 0],
+            [0, 1/n, 0, 0, 0],
+        ],
+        [   [0, 0, 1/n, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 1/n, 0, 0],
+        ],
+        [   [0, 1/n, 0, 0, 0],
+            [0, 1/n, 0, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 0, 1/n, 0],
+            [0, 0, 0, 1/n, 0],
+        ],
+        [   [1/n, 0, 0, 0, 0],
+            [0, 1/n, 0, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 0, 1/n, 0],
+            [0, 0, 0, 0, 1/n],
+        ],
+        [   [0, 0, 0, 0, 0],
+            [1/n, 1/n, 0, 0, 0],
+            [0, 0, 1/n, 0, 0],
+            [0, 0, 0, 1/n, 1/n],
+            [0, 0, 0, 0, 0],
+        ],
+        
+    ])
 
     # Perform sticks filtering
-    filtered_img = np.zeros(gradient_magnitude.shape, dtype=np.float32)
-    for kernel in kernels:
-        filtered = cv2.filter2D(gradient_magnitude, cv2.CV_64F, kernel)
-        filtered_img = np.maximum(filtered_img, filtered)
+    filtered_img = np.zeros(img.shape, dtype=np.float32)
+    # print(img)
+    for i in range(1, img.shape[0]-n-1, n):
+        for j in range(1, img.shape[1]-n-1, n):
+            max_kernel, max_contrast = kernels[0], float('-inf')
+            for kernel in kernels:
+                sum_sticks = 0
+                sum_neighboor = 0
+                for h in range(n):
+                    for g in range(n):
+                        if kernel[h, g] != 0:
+                            sum_sticks += img[i+h, j+g]
+                        else:
+                            sum_neighboor += img[i+h, j+g]
+                avg_sticks = math.ceil(sum_sticks / 5)
+                avg_neighboor = math.ceil(sum_neighboor / 5**2)
+                if avg_sticks - avg_neighboor > max_contrast:
+                    max_contrast = avg_sticks - avg_neighboor
+                    max_kernel = copy.deepcopy(kernel)
 
+            filtered = cv2.filter2D(img, cv2.CV_64F, max_kernel)
+            filtered_img = np.maximum(filtered_img, filtered)
     return filtered_img
 
 def my_edge_filter(img0, sigma):

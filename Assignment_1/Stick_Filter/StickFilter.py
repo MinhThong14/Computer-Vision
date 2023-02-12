@@ -115,29 +115,39 @@ def sticks_filter(img, n=5, i=8):
         
     ])
 
-    # Perform sticks filtering
+    # Create empty 2D image 
     filtered_img = np.zeros(img.shape, dtype=np.float32)
-    # print(img)
+    
+    # Iterate thru every nxn sub array of image
     for i in range(1, img.shape[0]-n-1, n):
         for j in range(1, img.shape[1]-n-1, n):
+            # Initialize max kernel and max contrast
             max_kernel, max_contrast = kernels[0], float('-inf')
+            # Iterate thru every kernels to find the appropriate stick direction
             for kernel in kernels:
                 sum_sticks = 0
                 sum_neighboor = 0
+                # Iterate thru every cells of a kernel
                 for h in range(n):
                     for g in range(n):
+                        # If the cell is not 0 then add that value from img to sum sticks
                         if kernel[h, g] != 0:
                             sum_sticks += img[i+h, j+g]
+                        # Otherwise add the sum neighboor
                         else:
                             sum_neighboor += img[i+h, j+g]
-                avg_sticks = math.ceil(sum_sticks / 5)
-                avg_neighboor = math.ceil(sum_neighboor / 5**2)
-                if avg_sticks - avg_neighboor > max_contrast:
-                    max_contrast = avg_sticks - avg_neighboor
+                # Calculate average of sticks and neighboor
+                avg_sticks = math.ceil(sum_sticks / n)
+                avg_neighboor = math.ceil(sum_neighboor / n**2)
+                # Calculate maximal contrast response and associated kernel
+                if abs(avg_sticks - avg_neighboor) > max_contrast:
+                    max_contrast = (avg_sticks - avg_neighboor)
                     max_kernel = copy.deepcopy(kernel)
-
+            # Apply the choosen kernel to the image 
             filtered = cv2.filter2D(img, cv2.CV_64F, max_kernel)
+            # Take maximum response at each pixel for the final image
             filtered_img = np.maximum(filtered_img, filtered)
+
     return filtered_img
 
 def gradient_orientation(imgx, imgy):
@@ -192,7 +202,7 @@ def apply_threshold(img1):
     :return the image that has pixels above the threshold
     
     """
-    threshold = 30
+    threshold = 25
     img1[img1 < threshold] = 0
     img1[img1 >= threshold] = 255
     return img1
@@ -237,7 +247,7 @@ if __name__ == "__main__":
         # Import image
         img = cv2.imread(input,0)
         # Gaussian blur image
-        gaussian_blur_img = gaussian_blur(img, sigma=0)
+        gaussian_blur_img = gaussian_blur(img, sigma=2)
         
         # Sobels
         imgx, imgy = sobel_filters(gaussian_blur_img)

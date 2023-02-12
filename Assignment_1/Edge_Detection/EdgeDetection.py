@@ -103,7 +103,7 @@ def apply_threshold(img1):
     :return the image that has pixels above the threshold
     
     """
-    threshold = 30
+    threshold = 25
     img1[img1 < threshold] = 0
     img1[img1 >= threshold] = 255
     return img1
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         # Import image
         img = cv2.imread(input,0)
         # Gaussian blur image
-        gaussian_blur_img = gaussian_blur(img, sigma=0)
+        gaussian_blur_img = gaussian_blur(img, sigma=2)
         
         # Sobels
         imgx, imgy = sobel_filters(gaussian_blur_img)

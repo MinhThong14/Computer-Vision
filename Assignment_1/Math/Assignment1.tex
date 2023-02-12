@@ -240,12 +240,14 @@
             \bigbreak so the error vector b - A$\hat{x}$ is orthogonal to the columns of A   
             \bigbreak
             \bigbreak
+
+            % Question 5 starts here
             \item Matrix K is a discrete, separable 2D filter kernel of size k x k. Assume k is an odd number. After applying
             filter K on an image I, we get a resulting image $I_{k}$.
             \bigbreak (a) (3 points) Given an image point (x,y), find its value in the resulting image, $I_{k}(x, y)$. Express your anwser 
             in terms of I, k, K, x and y. You don't need to consider the case when (x, y) is near the image boundary.
             \bigbreak(b) (5 points) One property of this separable kernel matrix K is that it can be expressed as the product of two vectors g $\in R^{kx1}$ and h $\in R^{1xk}$, which can also be regarded as two 1D filter kernels. In other words, K = gh. The resulting image we get by first applying g and then applying h to the image I is $I_{gh}$. Show that $I_{K} = I_{gh}$.
-            \bigbreak (a) $I_{K}(x, y) = \sum_{i=1}^{k}\sum_{j=1}^{k}K_{ij}I(x-i+\frac{k}{2}, y - j + \frac{k}{2})$
+            \bigbreak (a) Applying the convolution to matrix K with a kernel k x k, we have: \break $I_{K}(x, y) = \sum_{i=1}^{k}\sum_{j=1}^{k}K_{ij}I(x-(i-\frac{k}{2}), y - (j - \frac{k}{2}))$
             \bigbreak (b) We have: $I_{K} = K \circ I $ , and K = gh (by definition). So $I_{K} = gh \circ I =  I_{gh}$\break Mathematically: \begin{equation} \begin{split}I_{K}(x, y)& = \sum_{i=1}^{k}\sum_{j=1}^{k}K_{ij}I(x-(i-\frac{k}{2}), y - (j - \frac{k}{2}))\\
                     & = \sum_{i=1}^{k}\sum_{j=1}^{k}g_{i}h_{j}I(x-i+\frac{k}{2}, y - j + \frac{k}{2}) \\
                     & = \sum_{j=1}^{k}h_{j}\sum_{i=1}^{k}g_{i}I(x-i+\frac{k}{2}, y - j + \frac{k}{2}) \\

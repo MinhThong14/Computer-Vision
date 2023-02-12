@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import copy
-import sys
-
 
 INPUT_PATH = "./Input_Image"
 OUTPUT_PATH = "./Output_Image"
@@ -105,43 +103,10 @@ def apply_threshold(img1):
     :return the image that has pixels above the threshold
     
     """
-    threshold = 30  
+    threshold = 25
     img1[img1 < threshold] = 0
     img1[img1 >= threshold] = 255
     return img1
-
-def sticks_filter(img, n=5, i=8):
-    """
-    Function that create sticks filter
-
-    :param img: image that apply the sticks filter
-    :param n: kernel size
-    :param i: number of sticks
-    :return the image after apply the sticks  
-
-    """
-    # Compute gradient magnitude image
-    sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)
-    sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)
-    gradient_magnitude = np.sqrt(np.square(sobelx) + np.square(sobely))
-
-    # Define the sticks filter kernels
-    kernels = []
-    for rotateCode in range(i):
-        angle = 360.0 * rotateCode / i
-        rot_mat = cv2.getRotationMatrix2D((n / 2, n / 2), angle, 1)
-        kernel = np.zeros((n, n), dtype=np.float32)
-        cv2.rectangle(kernel, (0, n // 2 - 1), (n - 1, n // 2), 1.0, -1)
-        kernel = cv2.warpAffine(kernel, rot_mat, (n, n))
-        kernels.append(kernel)
-
-    # Perform sticks filtering
-    filtered_img = np.zeros(gradient_magnitude.shape, dtype=np.float32)
-    for kernel in kernels:
-        filtered = cv2.filter2D(gradient_magnitude, cv2.CV_64F, kernel)
-        filtered_img = np.maximum(filtered_img, filtered)
-
-    return filtered_img
 
 def my_edge_filter(img0, sigma):
     """
@@ -170,36 +135,6 @@ def my_edge_filter(img0, sigma):
     return apply_threshold(result)
 
 
-def my_edge_filter_with_stick_filter(img0, sigma):
-    """
-    Function that dectect the edge of an image
-
-    :param img0: a gray scale image
-    :param sigma: scalar (standard deviation of the Gaussian smoothing kernel)
-    :return the the edge magnitude image
-
-    """
-    # Smoothing image
-    img0 = gaussian_blur(img0, sigma)
-
-    # Sobel filters
-    imgx, imgy = sobel_filters(img0)
-
-    # Gradient magnitude
-    img1 = gradient_magnitude(imgx, imgy)
-
-    # Sticks filter
-    img1 = sticks_filter(img1)
-
-    # Gradient orientation
-    orientation_img = gradient_orientation(imgx, imgy)
-
-    # Non maximum suppression
-    result = non_maximum_suppression(img1, orientation_img) 
-
-    return apply_threshold(result)
-
-
 if __name__ == "__main__":
     # Input images
     input_images = ["cat2.jpg", "img0.jpg", "littledog.jpg"]
@@ -210,7 +145,7 @@ if __name__ == "__main__":
         # Import image
         img = cv2.imread(input,0)
         # Gaussian blur image
-        gaussian_blur_img = gaussian_blur(img, sigma=0)
+        gaussian_blur_img = gaussian_blur(img, sigma=2)
         
         # Sobels
         imgx, imgy = sobel_filters(gaussian_blur_img)
@@ -221,14 +156,8 @@ if __name__ == "__main__":
         # Gradient orientation image 
         gradient_orientation_img = gradient_orientation(imgx, imgy)
         
-        # Stick filter on gradient magnitude image
-        sticks_filter_magnitude_img = sticks_filter(gradient_magnitude_img)
-
         # Non_maximum image
         non_maximum_img = my_edge_filter(img, sigma=2)
-
-        # Non_maximum image
-        non_maximum_img_with_sticks_filter = my_edge_filter_with_stick_filter(img, sigma=2)
 
         # Image name
         img_name = input_img.split('.')[0]
@@ -243,13 +172,7 @@ if __name__ == "__main__":
         output_orientaion_img = OUTPUT_PATH + '/' + img_name + '/' + img_name + '_gradient_orientation.jpg'
         cv2.imwrite(output_orientaion_img, gradient_orientation_img)
 
-        sticks_filter_magnitude_img = np.uint8(sticks_filter_magnitude_img)
-        sticks_filter_magnitude_img = cv2.normalize(sticks_filter_magnitude_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
-        output_magnitude_img_with_sticks_filter = OUTPUT_PATH + '/' + img_name + '/' + img_name + '_gradient_magnitude_with_sticks_filter.jpg'
-        cv2.imwrite(output_magnitude_img_with_sticks_filter , sticks_filter_magnitude_img) 
-
         output_non_maximum_img = OUTPUT_PATH + '/' + img_name + '/' + img_name + '_non_maximum.jpg'
         cv2.imwrite(output_non_maximum_img, non_maximum_img)
 
-        output_non_maximum_img_with_sticks_filter = OUTPUT_PATH + '/' + img_name + '/' + img_name + '_non_maximum_with_sticks_filter.jpg'
-        cv2.imwrite(output_non_maximum_img_with_sticks_filter, non_maximum_img_with_sticks_filter)
+

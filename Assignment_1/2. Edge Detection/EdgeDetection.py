@@ -40,16 +40,6 @@ def sobel_filters(img0):
     
     return imgx, imgy
 
-def gradient_magnitude(imgx, imgy):
-    """
-    Function that creates the gradient magnitude image
-
-    :param imgx: image gradient in the x direction
-    :param imgy: image gradient in the y direction
-    :return gradient magnitude image
-    """
-    img1 = np.sqrt(np.power(imgx, 2) + np.power(imgy, 2))
-    return img1
 
 def gradient_orientation(imgx, imgy):
     """
